@@ -8,6 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
 
     <title>Aplikasi Kas Kematian Cireungit</title>
 
@@ -17,6 +19,17 @@
 
     <!-- Custom styles for this template-->
     <link href="/assets/startbootstrap/css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- DataTable -->
+    <link href="/assets/startbootstrap/vendor//datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+    <!-- jqueryUI -->
+    <link href="/assets/jqueryUI/jquery-ui.min.css" rel="stylesheet">
+
+    <!-- SweetAlert2 -->
+    <script src="assets/sweetalert2/sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="assets/sweetalert2/sweetalert2.min.css">
+
 
 </head>
 
@@ -29,7 +42,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/dashboard">
                 <div class="sidebar-brand-icon">
                     <i class="fas fa-book-open"></i>
                 </div>
@@ -40,8 +53,8 @@
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item">
-                <a class="nav-link" href="/">
+            <li class="nav-item {{ Request::is('dashboard') ? 'active' : '' }}">
+                <a class="nav-link" href="/dashboard">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -55,7 +68,7 @@
             </div>
 
             <!-- Nav Item - Transaksi -->
-            <li class="nav-item">
+            <li class="nav-item {{ Request::is('transaction*') ? 'active' : '' }}">
                 <a class="nav-link" href="/transaction">
                     <i class="fas fa-fw fa-desktop"></i>
                     <span>Transaksi</span></a>
@@ -173,9 +186,16 @@
 
     <!-- Core plugin JavaScript-->
     <script src="/assets/startbootstrap/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="/assets/jqueryUI/jquery-ui.min.js"></script>
 
     <!-- Custom scripts for all pages-->
     <script src="/assets/startbootstrap/js/sb-admin-2.min.js"></script>
+
+    <!-- DataTables -->
+    <script src="/assets/startbootstrap/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="/assets/startbootstrap/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    @yield('script')
 
 </body>
 
