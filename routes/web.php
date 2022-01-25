@@ -22,7 +22,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
 Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
 Route::post('/register', [RegisterController::class, 'store']);
 Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
@@ -34,5 +34,7 @@ Route::get('/apitransaction', [TransactionController::class, 'apiTransaction'])-
 Route::get('/transactionreportview', [TransactionController::class, 'transactionReportView'])->name('transaction.reportview')->middleware('auth');
 Route::post('/transactionreportpdf', [TransactionController::class, 'transactionReportPdf'])->name('transaction.reportpdf')->middleware('auth');
 
-Route::get('/apiuser', [UserController::class, 'apiUser'])->name('api.user')->middleware('auth');
 Route::resource('/user', UserController::class)->middleware('auth');
+Route::get('/apiuser', [UserController::class, 'apiUser'])->name('api.user')->middleware('auth');
+Route::get('/profile/{user}/edit', [UserController::class, 'editProfile'])->name('profile')->middleware('auth');
+Route::put('/profile/{user}', [UserController::class, 'updateProfile'])->middleware('auth');

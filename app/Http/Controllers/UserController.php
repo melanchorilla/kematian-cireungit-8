@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Rules\MatchOldPassword;
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Yajra\DataTables\Datatables;
 
@@ -127,5 +129,29 @@ class UserController extends Controller
             })
             ->rawColumns(['action'])
             ->make(true);
+    }
+
+
+    public function editProfile($id)
+    {
+        $user = User::find($id);
+        return view('user.profile', compact('user'));
+    }
+
+
+    public function updateProfile(Request $request, $id)
+    {
+        $request->validate([
+            'name' => ['required'],
+            'current_password' => ['required', new MatchOldPassword],
+            'new_password' => ['required'],
+            'new_confirm_password' => ['same:new_password'],
+        ]);
+
+        User::find(auth()->user()->id)->update([
+            'password' => Hash::make($request->new_password),
+            'name' => $request->name
+        ]);
+        return redirect()->route('profile')->withSuccess("Profile has been updated!");
     }
 }
