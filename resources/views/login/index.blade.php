@@ -20,6 +20,11 @@
                                 {{ session('success') }}
                             </div>
                             @endif
+                            @if(session()->has('loginError'))
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                {{ session('loginError') }}
+                            </div>
+                            @endif
                             <form class="user" method="post" action="/login">
                                 @csrf
                                 <div class="form-group">

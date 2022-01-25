@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,3 +31,6 @@ Route::get('/logout', [LoginController::class, 'logout']);
 
 Route::get('/apitransaction', [TransactionController::class, 'apiTransaction'])->name('api.transaction')->middleware('auth');
 Route::resource('/transaction', TransactionController::class)->middleware('auth');
+
+Route::get('/apiuser', [UserController::class, 'apiUser'])->name('api.user')->middleware('auth');
+Route::resource('/user', UserController::class)->middleware('auth');

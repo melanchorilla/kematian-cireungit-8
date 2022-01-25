@@ -14,6 +14,7 @@
                     <div class="alert alert-success">
                         {{ session('success') }}
                     </div>
+                    @endif
                     <form class="user" method="post" action="/register">
                         @csrf
                         <div class="form-group">

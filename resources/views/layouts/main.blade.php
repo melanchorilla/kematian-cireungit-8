@@ -68,12 +68,18 @@
             </div>
 
             <!-- Nav Item - Transaksi -->
-            <li class="nav-item {{ Request::is('transaction*') ? 'active' : '' }}">
+            <li class="nav-item {{ Request::is('transaction') ? 'active' : '' }}">
                 <a class="nav-link" href="/transaction">
                     <i class="fas fa-fw fa-desktop"></i>
                     <span>Transaksi</span></a>
             </li>
 
+            <!-- Nav Item - User -->
+            <li class="nav-item {{ Request::is('user') ? 'active' : '' }}">
+                <a class="nav-link" href="/user">
+                    <i class="fas fa-fw fa-user"></i>
+                    <span>User</span></a>
+            </li>
 
 
 
