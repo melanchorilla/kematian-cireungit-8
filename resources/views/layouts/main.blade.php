@@ -21,9 +21,9 @@
     <link href="/assets/startbootstrap/css/sb-admin-2.min.css" rel="stylesheet">
 
     <!-- DataTable -->
-    <link href="/assets/startbootstrap/vendor//datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link href="/assets/startbootstrap/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
-    <!-- jqueryUI -->
+    <!-- jQueryUI -->
     <link href="/assets/jqueryUI/jquery-ui.min.css" rel="stylesheet">
 
     <!-- SweetAlert2 -->
@@ -81,6 +81,22 @@
                     <span>User</span></a>
             </li>
 
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Laporan
+            </div>
+
+            <li class="nav-item {{ Request::is('transactionreportview') ? 'active' : '' }}">
+                <a class="nav-link" href="/transactionreportview">
+                    <i class="fas fa-fw fa-book"></i>
+                    <span>Laporan Transaksi</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
 
 
             <!-- Sidebar Toggler (Sidebar) -->
@@ -200,6 +216,13 @@
     <!-- DataTables -->
     <script src="/assets/startbootstrap/vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="/assets/startbootstrap/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- jQueryUI -->
+    <script src="/assets/jqueryUI/jquery-ui.min.js"></script>
+
+    <!-- jQueryValidation -->
+    <script src="/assets/jqueryvalidation/jquery.validate.min.js"></script>
+    <script src="/assets/jqueryvalidation/additional-methods.min.js"></script>
 
     @yield('script')
 

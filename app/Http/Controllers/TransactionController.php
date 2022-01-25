@@ -6,6 +6,7 @@ use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Datatables;
+use PDF;
 
 class TransactionController extends Controller
 {
@@ -120,5 +121,25 @@ class TransactionController extends Controller
                     '<a onclick="deleteData(' . $transaction->id . ')" class="btn btn-danger btn-xs"><i class ="glyphicon glyphicon-trash"></i> Delete</a> ';
             })
             ->rawColumns(['action'])->make(true);
+    }
+
+    public function transactionReportView()
+    {
+        return view('transaction.reportview');
+    }
+
+    public function transactionReportPdf(Request $request)
+    {
+        $dariTanggal = $request['dariTanggal'] . ' 00:00:00';
+        $sampaiTanggal = $request['sampaiTanggal'] . ' 23:59:59';
+        // $transactions = DB::select('SELECT * FROM transactions WHERE created_at BETWEEN "2021-05-25 00:00:00" AND "2021-05-31 23:59:59"');
+        // $transactions = DB::select('SELECT * FROM transactions WHERE created_at BETWEEN "$dariTanggal" AND "$sampaiTanggal"');
+        $transactions = DB::table('transactions')->whereBetween('created_at', array($dariTanggal, $sampaiTanggal))->get();
+
+
+        $pdf = PDF::loadView('transaction.pdf', compact('transactions', 'dariTanggal', 'sampaiTanggal'));
+        $pdf->setPaper('a4', 'potrait');
+
+        return $pdf->stream();
     }
 }
