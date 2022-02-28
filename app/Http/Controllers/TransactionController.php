@@ -42,7 +42,7 @@ class TransactionController extends Controller
             'penerimaan' => $request['penerimaan'],
             'pengeluaran' => $request['pengeluaran'],
             'keterangan' => $request['keterangan'],
-            'user_id' => 1,
+            'user_id' => auth()->user()->id,
             'created_at' => date("Y-m-d H:i:s"),
             'updated_at' => date("Y-m-d H:i:s")
         ];
@@ -87,6 +87,7 @@ class TransactionController extends Controller
         $transaction->penerimaan = $request['penerimaan'];
         $transaction->pengeluaran = $request['pengeluaran'];
         $transaction->keterangan = $request['keterangan'];
+        $transaction->user_id = auth()->user()->id;
         $transaction->updated_at = date("Y-m-d H:i:s");
         $transaction->update();
 

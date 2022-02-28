@@ -74,6 +74,12 @@
                     <span>Transaksi</span></a>
             </li>
 
+            <li class="nav-item {{ Request::is('stock') ? 'active' : '' }}">
+                <a class="nav-link" href="/stock">
+                    <i class="fas fa-fw fa-box"></i>
+                    <span>Stok</span></a>
+            </li>
+
             <!-- Nav Item - User -->
             <li class="nav-item {{ Request::is('user') ? 'active' : '' }}">
                 <a class="nav-link" href="/user">
@@ -166,7 +172,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
+                        <span>Copyright &copy; Aplikasi Kas Kematian <?= date('Y') ?></span>
                     </div>
                 </div>
             </footer>

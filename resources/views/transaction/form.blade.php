@@ -39,8 +39,8 @@
                     <!-- End Form -->
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" id="save-transaction">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn btn-primary" id="save-transaction">Simpan</button>
                 </div>
             </div>
         </div>

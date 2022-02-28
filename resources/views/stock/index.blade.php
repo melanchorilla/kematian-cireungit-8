@@ -1,8 +1,6 @@
 @extends('layouts.main')
 
 @section('content')
-
-<!-- Begin Page Content -->
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
@@ -14,36 +12,33 @@
         </div>
     </div>
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Transaksi</h1>
+    <h1 class="h3 mb-2 text-gray-800">Stok</h1>
 
-    <!-- DataTales -->
+    <!-- DataTables -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <!-- <h6 class="m-0 font-weight-bold text-primary">DataTables</h6> -->
-            <button onclick="addForm()" class="m-0 font-weight-bold btn btn-primary" data-toggle="modal" data-target="#modalTransaction">Tambah Transaksi</button>
+            <button onclick="addForm()" class="m-0 font-weight-bold btn btn-primary" data-toggle="modal" data-target="#modalStock">Tambah Data Stock</button>
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable-transaction" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="dataTable-stock" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>No.</th>
-                            <th>Tanggal</th>
-                            <th>Penerimaan</th>
-                            <th>Pengeluaran</th>
+                            <th>Nama Barang</th>
+                            <th>Jumlah Barang</th>
                             <th>Keterangan</th>
-                            <th>Penerima</th>
+                            <th>Dikelola Oleh</th>
                             <th width="16%">Aksi</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
                             <th>No.</th>
-                            <th>Tanggal</th>
-                            <th>Penerimaan</th>
-                            <th>Pengeluaran</th>
+                            <th>Nama Barang</th>
+                            <th>Jumlah Barang</th>
                             <th>Keterangan</th>
-                            <th>Penerima</th>
+                            <th>Dikelola Oleh</th>
                             <th width="16%">Aksi</th>
                         </tr>
                     </tfoot>
@@ -53,86 +48,82 @@
             </div>
         </div>
     </div>
-
 </div>
-<!-- /.container-fluid -->
-
+<!-- / .container-fluid -->
 
 <!-- include form.blade.php -->
-@include('transaction.form')
+@include('stock.form')
 
 @endsection
 
-<!-- DataTable Script -->
+<!-- DataTable script -->
 @section('script')
 <script>
-    var tableTransaction = $('#dataTable-transaction').DataTable({
+    var tableStock = $('#dataTable-stock').DataTable({
         processing: true,
-        serverSide: true,
-        ajax: "{{ route('api.transaction') }}",
+        server: true,
+        ajax: "{{ route('api.stock') }}",
         columns: [{
                 data: 'DT_RowIndex',
                 name: 'DT_RowIndex',
-            }, {
-                data: 'created_at',
-                name: 'created_at',
-            }, {
-                data: 'penerimaan',
-                name: 'penerimaan',
-            }, {
-                data: 'pengeluaran',
-                name: 'pengeluaran',
+            },
+            {
+                data: 'nama_barang',
+                name: 'nama_barang',
+            },
+            {
+                data: 'jumlah_barang',
+                name: 'jumlah_barang',
             },
             {
                 data: 'keterangan',
                 name: 'keterangan',
-            }, {
+            },
+            {
                 data: 'name',
                 name: 'name',
-            }, {
+            },
+            {
                 data: 'action',
                 name: 'action',
                 orderable: false,
-                searchable: false
+                searchable: false,
             },
         ]
-    })
+    });
 
 
     function addForm() {
         save_method = "add";
         $('input[name=_method]').val('POST');
-        $('#modalTransaction').modal('show');
-        $('#modalTransaction form')[0].reset();
-        $('.modal-title').text('Tambah Transaksi');
+        $('#modalStock').modal('show');
+        $('#modalStock form')[0].reset();
+        $('.modal-title').text('Tambah Data Stok');
     }
-
 
     function editForm(id) {
         save_method = 'edit';
         $('input[name=_method]').val('PATCH');
-        $('#modalTransaction form')[0].reset();
+        $('#modalStock form')[0].reset();
 
         $.ajax({
-            url: "{{ url('transaction') }}" + "/" + id + "/edit",
+            url: "{{ url('stock') }}" + "/" + id + "/edit",
             type: "GET",
             dataType: "JSON",
             success: function(data) {
-                $('#modalTransaction').modal('show');
-                $('.modal-title').text('Edit Transaksi');
+                $('#modalStock').modal('show');
+                $('.modal-title').text('Edit Stok');
 
                 $('#id').val(data.id);
-                $('#penerimaan').val(data.penerimaan);
-                $('#pengeluaran').val(data.pengeluaran);
+                $('#nama_barang').val(data.nama_barang);
+                $('#jumlah_barang').val(data.jumlah_barang);
                 $('#keterangan').val(data.keterangan);
-
             },
             error: function() {
                 alert("No Data");
             }
-        })
+        });
     }
-
 
     function deleteData(id) {
         var csrf_token = $('meta[name="csrf-token"]').attr('content');
@@ -147,14 +138,14 @@
             confirmButtonText: 'Ya, hapus!'
         }).then(function() {
             $.ajax({
-                url: "{{ url('transaction') }}" + "/" + id,
+                url: "{{ url('stock') }}" + "/" + id,
                 type: "POST",
                 data: {
                     '_method': 'DELETE',
                     '_token': csrf_token
                 },
                 success: function(data) {
-                    tableTransaction.ajax.reload();
+                    tableStock.ajax.reload();
                     swal({
                         title: 'Sukses!',
                         text: 'Data berhasil dihapus!',
@@ -164,7 +155,7 @@
                 error: function() {
                     swal({
                         title: 'Ups !',
-                        text: 'Error!',
+                        text: 'Ada yang error!',
                         type: 'error',
                     })
                 }
@@ -173,7 +164,7 @@
     }
 
     $(function() {
-        $('#save-transaction').on('click', function(e) {
+        $('#save-stock').on('click', function(e) {
             if (!e.isDefaultPrevented()) {
                 var id = $('#id').val();
                 // add
@@ -185,7 +176,7 @@
                             type: "success"
                         });
                     }
-                    url = "{{ url('transaction') }}";
+                    url = "{{ url('stock') }}";
                 }
                 // edit
                 else {
@@ -196,7 +187,7 @@
                             type: "success"
                         });
                     }
-                    url = "{{ url('transaction'). '/' }}" + id;
+                    url = "{{ url('stock'). '/' }}" + id;
                 }
 
             }
@@ -204,10 +195,10 @@
             $.ajax({
                 url: url,
                 type: "POST",
-                data: $('#modalTransaction form').serialize(),
+                data: $('#modalStock form').serialize(),
                 success: function($data) {
-                    $('#modalTransaction').modal('hide');
-                    tableTransaction.ajax.reload();
+                    $('#modalStock').modal('hide');
+                    tableStock.ajax.reload();
                     sweetalert();
                 },
                 error: function() {
@@ -224,5 +215,4 @@
         })
     })
 </script>
-
 @endsection

@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\StockController;
 use App\Http\Controllers\UserController;
 
 /*
@@ -29,12 +30,15 @@ Route::get('/login', [LoginController::class, 'index'])->name('login')->middlewa
 Route::post('/login', [LoginController::class, 'authenticate']);
 Route::get('/logout', [LoginController::class, 'logout']);
 
-Route::resource('/transaction', TransactionController::class)->middleware('auth');
+Route::resource('/transaction', TransactionController::class)->middleware('auth')->except(['create', 'show']);
 Route::get('/apitransaction', [TransactionController::class, 'apiTransaction'])->name('api.transaction')->middleware('auth');
 Route::get('/transactionreportview', [TransactionController::class, 'transactionReportView'])->name('transaction.reportview')->middleware('auth');
 Route::post('/transactionreportpdf', [TransactionController::class, 'transactionReportPdf'])->name('transaction.reportpdf')->middleware('auth');
 
-Route::resource('/user', UserController::class)->middleware('auth');
+Route::resource('/stock', StockController::class)->middleware('auth')->except(['create', 'show']);
+Route::get('/apistock', [StockController::class, 'apiStock'])->name('api.stock')->middleware('auth');
+
+Route::resource('/user', UserController::class)->middleware('auth')->except(['create', 'store', 'show']);
 Route::get('/apiuser', [UserController::class, 'apiUser'])->name('api.user')->middleware('auth');
 Route::get('/profile/{user}/edit', [UserController::class, 'editProfile'])->name('profile')->middleware('auth');
 Route::put('/profile/{user}', [UserController::class, 'updateProfile'])->middleware('auth');
