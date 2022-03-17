@@ -11,7 +11,8 @@ class DashboardController extends Controller
     {
         $laporan = [
             'queryBulanan' => DB::select('SELECT COALESCE(SUM(penerimaan), 0) as penerimaan_bulanan, COALESCE(SUM(pengeluaran), 0) as pengeluaran_bulanan FROM transactions WHERE MONTH(created_at) = MONTH(CURRENT_DATE()) AND YEAR(created_at) = YEAR(CURRENT_DATE())')[0],
-            'queryTahunan' => DB::select('SELECT COALESCE(SUM(penerimaan), 0) as penerimaan_tahunan, COALESCE(SUM(pengeluaran), 0) as pengeluaran_tahunan FROM transactions WHERE YEAR(created_at) = YEAR(CURRENT_DATE())')[0],
+            // 'queryTahunan' => DB::select('SELECT COALESCE(SUM(penerimaan), 0) as penerimaan_tahunan, COALESCE(SUM(pengeluaran), 0) as pengeluaran_tahunan FROM transactions WHERE YEAR(created_at) = YEAR(CURRENT_DATE())')[0],
+            'querySaldo' => DB::select('SELECT SUM(penerimaan - pengeluaran) as saldo FROM transactions')[0],
             'queryJanuari' => DB::select('SELECT COALESCE(SUM(penerimaan), 0) as penerimaan_januari, COALESCE(SUM(pengeluaran), 0) as pengeluaran_januari FROM transactions WHERE MONTH(created_at) = MONTH("2020-01-01 00:00:00") AND YEAR(created_at) = YEAR(CURRENT_DATE())')[0],
             'queryFebruari' => DB::select('SELECT COALESCE(SUM(penerimaan), 0) as penerimaan_februari, COALESCE(SUM(pengeluaran), 0) as pengeluaran_februari FROM transactions WHERE MONTH(created_at) = MONTH("2020-02-01 00:00:00") AND YEAR(created_at) = YEAR(CURRENT_DATE())')[0],
             'queryMaret' => DB::select('SELECT COALESCE(SUM(penerimaan), 0) as penerimaan_maret, COALESCE(SUM(pengeluaran), 0) as pengeluaran_maret FROM transactions WHERE MONTH(created_at) = MONTH("2020-03-01 00:00:00") AND YEAR(created_at) = YEAR(CURRENT_DATE())')[0],
