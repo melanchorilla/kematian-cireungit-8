@@ -95,6 +95,40 @@
                 orderable: false,
                 searchable: false
             },
+        ],
+        dom: 'lBfrtip',
+        aLengthMenu: [
+            [10, 25, 50, 100, -1],
+            [10, 25, 50, 100, "All"],
+        ],
+        // buttons: [
+        //     'copy', 'csv', 'excel', 'pdf', 'print'
+        // ]
+        buttons: [
+            {
+                extend: 'excel',
+                text: 'Excel',
+                className: 'btn btn-success',
+                exportOptions: {
+                    columns: 'th:not(:last-child)'
+                }
+            },
+            {
+                extend: 'pdf',
+                text: 'PDF',
+                className: 'btn btn-danger',
+                exportOptions: {
+                    columns: 'th:not(:last-child)'
+                }
+            },
+            {
+                extend: 'print',
+                text: 'Print',
+                className: 'btn btn-default',
+                exportOptions: {
+                    columns: 'th:not(:last-child)'
+                }
+            }
         ]
     })
 
